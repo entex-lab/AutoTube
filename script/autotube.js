@@ -67,6 +67,7 @@ function videoRelated() {
 function onPlayerStateChange(newState) {
 	
     var currentUrl = ytplayer.getVideoUrl();
+    var newTitle;
 	if( newState == 0 ) {
 		changeRelatedList( currentUrl);
 		videoRelated();

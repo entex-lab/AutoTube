@@ -28,7 +28,7 @@ def GetOnViews() :
 def GetMostRecent() :
 
 	yt_api = gdata.youtube.service.YouTubeService()
-	most = yt_api.GetMostDiscussedVideoFeed()
+	most = yt_api.GetRecentlyFeaturedVideoFeed()
 	cnt = 0
 	req.write( '<table border="0">')
 	for entry in most.entry :

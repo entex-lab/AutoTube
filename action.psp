@@ -22,7 +22,7 @@ def PrintEntryDetails( entry, index, vout) :
 	req.write( '<span id="ttime%d" class="time">%s</span>' %( index, datetime.timedelta( seconds=int(entry.media.duration.seconds))))
 	req.write( '</td>')
 	req.write( '<td>')
-	req.write( '<span id="ttitle%d" class="title"><a href="javascript:changeVideo(\'%s\')" onclick="changeTitle( \'video_title\', \'%s\')" >%s</a></span><br />' % ( index, avid, entry.media.title.text, entry.media.title.text))
+	req.write( '<span class="title"><a id="ttitle%d" href="javascript:changeVideo(\'%s\')" onclick="changeTitle( \'video_title\', \'%s\')" >%s</a></span><br />' % ( index, avid, entry.media.title.text, entry.media.title.text))
 	req.write( '</td>')                                          
 	req.write( '</tr>')
 	req.write( '<tr>')
