@@ -20,12 +20,13 @@
 		</form>
 	</div>
 
-	<h1 id="video_title">title here</h1>
+	<p id="video_title">title here</p>
 	<div id="left">
 		<div id="player">
 		</div>
 	</div>
 
+<p id="sideList">list here</p>
 <div id="right">
 </div>
 

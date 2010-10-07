@@ -17,13 +17,16 @@ function initPage() {
 	}
 	);
 
+	changeTitle( 'video_title', 'Random Most Viewed Video');
+	changeTitle( 'sideList', 'Random List');
+
 }
 
-function changeTitle() {
+function changeTitle( targetId, text) {
 
-	var target = document.getElementById( 'video_title');
+	var target = document.getElementById( targetId );
 
-	target.innerHTML = 'hey charlie';
+	target.innerHTML = text;
 
 }
 
@@ -80,6 +83,8 @@ function createList( ) {
 			$('#right').fadeIn();
 		}
 	);
+
+	changeTitle( 'sideList', 'Current Related Video');
 
 	return false;
 }
