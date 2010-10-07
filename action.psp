@@ -18,11 +18,11 @@ def PrintEntryDetails( entry, index, vout) :
 	avid = t.split('?f')[0]
 	req.write( '<tr>')
 	req.write( '<td rowspan="2"')
-	req.write( '<span class="img"><a id="timg%d" href="javascript:changeVideo(\'%s\')"><img src="%s" /></a></span><br />' % ( index, avid, entry.media.thumbnail[random.randint( 0,2)].url))
+	req.write( '<span class="img"><a id="timg%d" onclick="changeTitle( \'video_title\', \'%s\')" href="javascript:changeVideo(\'%s\')" ><img src="%s" /></a></span><br />' % ( index, entry.media.title.text, avid, entry.media.thumbnail[random.randint( 0,2)].url))
 	req.write( '<span id="ttime%d" class="time">%s</span>' %( index, datetime.timedelta( seconds=int(entry.media.duration.seconds))))
 	req.write( '</td>')
 	req.write( '<td>')
-	req.write( '<span id="ttitle%d" class="title"><a href="javascript:changeVideo(\'%s\')">%s</a></span><br />' % ( index, avid, entry.media.title.text))
+	req.write( '<span id="ttitle%d" class="title"><a href="javascript:changeVideo(\'%s\')" onclick="changeTitle( \'video_title\', \'%s\')" >%s</a></span><br />' % ( index, avid, entry.media.title.text, entry.media.title.text))
 	req.write( '</td>')                                          
 	req.write( '</tr>')
 	req.write( '<tr>')
