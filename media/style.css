@@ -22,7 +22,7 @@ html {
 	position: absolute;
 	margin-top: 10%;
 	margin-left: 5%;
-	border: 2px dashed #00ffff;
+/*	border: 2px dashed #00ffff;*/
 	padding: 1px;
 }
 
@@ -33,14 +33,14 @@ html {
 	margin-top: 15%;
 	margin-left: 5%;
 	margin-bottom: 5%;
-	border: 2px solid #0000ff;
+/*	border: 2px solid #0000ff;*/
 	padding: 10px;
 }
 
 #AutoPlayer {
 	position: relative;
 	margin-top: 50px;
-	margin-left: 150px;
+	margin-left: 50px;
 }
 
 #right {

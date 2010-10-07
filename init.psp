@@ -1,3 +1,4 @@
+<%@ include file = "./action.psp" %>
 <%
 
 import cgi
@@ -6,5 +7,45 @@ import datetime
 import gdata.youtube
 import gdata.youtube.service
 
+def GetOnViews() :
+
+	yt_api = gdata.youtube.service.YouTubeService()
+	onView = yt_api.GetMostViewedVideoFeed()
+	chose = random.randint( 0, 5)
+	iter = 0
+	chose_vid = ''
+	for entry in onView.entry :
+		if iter == chose :
+			if not entry.noembed :
+				chose_url = entry.GetSwfUrl()
+				tmp = chose_url.split('v/')[1]
+				chose_vid = tmp.split('?f')[0]
+				break
+			else :
+				chose = chose + 1
+		iter = iter + 1
+ 
+def GetMostRecent() :
+
+	yt_api = gdata.youtube.service.YouTubeService()
+	most = yt_api.GetMostDiscussedVideoFeed()
+	cnt = 0
+	req.write( '<table border="0">')
+	for entry in most.entry :
+		if not entry.noembed :
+			if random.random() > 0.5 :
+				PrintEntryDetails( entry, cnt, -1) 
+				cnt = cnt + 1
+		else :
+			continue
+		if cnt > 5 :
+			break
+	req.write( '</table>')
+
+which = form.getfirst('which')
+if which == 'left' :
+	GetOnViews()
+elif which == 'right' :
+	GetMostRecent() 
 
 %>

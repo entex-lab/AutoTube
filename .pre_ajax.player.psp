@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<% 
+import cgi
+import random
+import datetime
+import gdata.youtube
+import gdata.youtube.service
+
+url = ''
+vid = ''
+%>
+
+<head>
+	<title>AutoTube</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<script language="javascript" type="text/javascript" src="./jquery/jquery-1.3.2.js"></script>
+	<script language="javascript" type="text/javascript" src="./swfobject/swfobject.js"></script>
+	<link rel=stylesheet type="text/css" href="./style.css">
+</head>
+
+<%-- function here --%>
+<%
+def PrintEntryDetails( entry, index, vout) :
+	global url, vid
+	vurl = entry.GetSwfUrl()
+	url = vurl
+	t = vurl.split('v/')[1]
+	avid = t.split('?f')[0]
+	req.write( '<tr>')
+	req.write( '<td rowspan="2"')
+	req.write( '<span id="timg#" class="img"><a href="javascript:changevideo(\'%s\')"><img src="%s" /></a></span><br />' % ( avid, entry.media.thumbnail[random.randint( 0,2)].url))
+	req.write( '<span id="ttime#" class="time">%s</span>' % datetime.timedelta( seconds=int(entry.media.duration.seconds)))
+	req.write( '</td>')
+	req.write( '<td>')
+	req.write( '<span id="ttitle#" class="title"><a href="javascript:changevideo(\'%s\')">%s</a></span><br />' % ( avid, entry.media.title.text))
+	req.write( '</td>')                                          
+	req.write( '</tr>')
+	req.write( '<tr>')
+	req.write( '<td>')
+	req.write( '<span id="tview_count#" class="view_count">View Count: %s</span><br />' % entry.statistics.view_count)
+	req.write( '</td>')
+	req.write( '</tr>')
+	if index == vout + 1 :
+		vid = t.split('?f')[0]
+
+def PrintVideoFeed( feed) :
+	if not feed.entry :
+		req.write( '<center><b><p><font color="red">Result not found.</font></p></b></center>')
+	else :
+		index = 1
+		video_out = random.randint( 0, 5)
+		req.write( '<div id="right">')
+		req.write( '<table border="0">')
+		for entry in feed.entry :
+			if not entry.noembed :
+				PrintEntryDetails( entry, index, video_out)
+				index = index + 1
+			else :
+				continue
+#			if index > 5 :
+#				break;
+		req.write( '</table></div>')
+
+def SearchAndPrint( search_terms):
+	yt_service = gdata.youtube.service.YouTubeService()
+	query = gdata.youtube.service.YouTubeVideoQuery()
+	query.vq = search_terms 
+	query.orderby = 'relevance'
+	query.racy = 'include'
+	feed = yt_service.YouTubeQuery(query)
+	PrintVideoFeed( feed)
+
+def GetRelatedFeed( videoid) :
+	yt_service = gdata.youtube.service.YouTubeService()
+	related_feed = yt_service.GetYouTubeRelatedVideoFeed( video_id=videoid)
+	PrintVideoFeed( related_feed)
+
+%>
+
+<script>
+var exist = false;
+/*
+ * Polling the player for information
+ */
+
+// Update a particular HTML element with a new value
+function updateHTML(elmId, value) {
+  document.getElementById(elmId).innerHTML = value;
+}
+
+// This function is called when an error is thrown by the player
+function onPlayerError(errorCode) {
+  alert("An error occured of type:" + errorCode);
+}
+
+// This function is called when the player changes state
+function onPlayerStateChange(newState) {
+  updateHTML("playerState", newState);
+}
+
+// Display information about the current state of the player
+function updatePlayerInfo() {
+  // Also check that at least one function exists since when IE unloads the
+  // page, it will destroy the SWF before clearing the interval.
+  if(autoplayer && autoplayer.getDuration) {
+    updateHTML("videoDuration", autoplayer.getDuration());
+    updateHTML("videoCurrentTime", autoplayer.getCurrentTime());
+    updateHTML("bytesTotal", autoplayer.getVideoBytesTotal());
+    updateHTML("startBytes", autoplayer.getVideoStartBytes());
+    updateHTML("bytesLoaded", autoplayer.getVideoBytesLoaded());
+  }
+}
+
+// This function is automatically called by the player once it loads
+function onYouTubePlayerReady(playerId) {
+  autoplayer = document.getElementById("AutoPlayer");
+  // This causes the updatePlayerInfo function to be called every 250ms to
+  // get fresh data from the player
+  setInterval(updatePlayerInfo, 250);
+  updatePlayerInfo();
+  autoplayer.addEventListener("onStateChange", "onPlayerStateChange");
+  autoplayer.addEventListener("onError", "onPlayerError");
+}
+
+function changevideo( videoID) {
+// The video to load.
+// Lets Flash from another domain call JavaScript
+	if( exist) {
+		swfobject.removeSWF("AutoPlayer");
+		var d = document.createElement("div");
+		d.setAttribute("id", "player");
+		document.getElementById("left").appendChild(d);
+	}
+
+	exist = true;
+
+	var params = { allowScriptAccess: "always" };
+	// The element id of the Flash embed
+	var atts = { id: "AutoPlayer" };
+	// All of the magic handled by SWFObject (http://code.google.com/p/swfobject/)
+	swfobject.embedSWF("http://www.youtube.com/v/" + videoID + "&enablejsapi=1&playerapiid=AutoPlayer", 
+               "player", "480", "360", "8", null, null, params, atts);
+}
+</script>
+<body>
+
+<% 
+term = form.getfirst('term')
+if not term: 
+	#
+%>
+<div id="footer">
+	<img src="./logo-350x90.png" width="30%"/>
+	<form action="player.psp" method="GET">
+		<th><input type="text" name="term" />
+		<th><input type="submit" value="Search!" />
+	</form>
+</div>
+<div id="left">
+<%--
+	put a recommand video
+--%>
+</div>
+<div id="right">
+<%--
+	put the top_favorites
+--%>
+<%
+else :
+	term = cgi.escape(term)
+	#
+%>
+<div id="footer">
+<img src="./logo-350x90.png" width="30%"/>
+<form action="player.psp" method="GET">
+	<input type="text" name="term" value="<%= term%>" />
+	<input type="submit" value="Search!" />
+</form></span>
+</div>
+<%
+	SearchAndPrint( term)
+%>
+<div id="left">
+<div id="player">
+<script>
+changevideo( '<%= vid %>');
+</script>
+</div>
+<div id="videoInfo"> 
+<p>Player state: <span id="playerState">--</span></p> 
+<p>Current Time: <span id="videoCurrentTime">--:--</span> | Duration: <span id="videoDuration">--:--</span></p> 
+<p>Bytes Total: <span id="bytesTotal">--</span> | Start Bytes: <span id="startBytes">--</span> | Bytes Loaded: <span id="bytesLoaded">--</span></p> 
+</div>
+</body>
+</html>
+

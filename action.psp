@@ -47,8 +47,8 @@ def PrintVideoFeed( feed) :
 			else :
 				continue
 			if index > 5 :
-				break;
-		req.write( '</table></div>')
+				break
+		req.write( '</table>')
 
 def SearchAndPrint( search_terms):
 	yt_service = gdata.youtube.service.YouTubeService()
@@ -66,12 +66,10 @@ def GetRelatedFeed( videoid) :
 
 term = form.getfirst('term')
 if term :
-	term = cgi.escape( term)
 	SearchAndPrint( term)
 
 related = form.getfirst('related')
 if related :
-	related = cgi.escape( related)
 	tmp = related.split('v=')[1]
 	related = tmp.split('&')[0]
 	GetRelatedFeed( related)

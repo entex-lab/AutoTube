@@ -1,8 +1,23 @@
-$(document).ready( initPage;
+$(document).ready( initPage);
 
 /* ajax */
 
 var exist = false;
+
+function initPage() {
+
+/*
+	$('#left').load( './init.psp?which=left', function( data) {
+		$('#left').fadeIn();
+	}
+	);
+*/
+	$('#right').load( './init.psp?which=right', function() {
+		$('#right').fadeIn();
+	}
+	);
+
+}
 
 function changeTitle() {
 
@@ -27,12 +42,12 @@ function changeVideo( videoID) {
 		document.getElementById("left").appendChild(d);
 	}
 	exist = true;
-	var params = { allowScriptAccess: 'always'};
+	var params = { allowScriptAccess: 'always', allowfullscreen: 'true'};
 	var atts = { id: "AutoPlayer"};
-	swfobject.embedSWF("http://www.youtube.com/v/" + videoID + "&enablejsapi=1&autoplay=1&rel=0&playerapiid=AutoPlayer", 
+	swfobject.embedSWF("http://www.youtube.com/v/" + videoID + "&enablejsapi=1&autoplay=1&rel=0&fs=1&playerapiid=AutoPlayer", 
                "player", "480", "360", "8", null, null, params, atts);
 }
-
+                                                                
 function videoRelated() {
 
 	var linkArray = new Array();
@@ -58,6 +73,7 @@ function onPlayerStateChange(newState) {
 function createList( ) {
 
 	var searchTerm = document.getElementById( 'term').value;
+	searchTerm = encodeURIComponent( searchTerm);
 
 	$('#right').load('./action.psp?term='+searchTerm,
 		function(){
