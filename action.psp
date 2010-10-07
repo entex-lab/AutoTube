@@ -1,0 +1,79 @@
+<% 
+import cgi
+import random
+import datetime
+import gdata.youtube
+import gdata.youtube.service
+
+url = ''
+vid = ''
+
+# function start here
+
+def PrintEntryDetails( entry, index, vout) :
+	global url, vid
+	vurl = entry.GetSwfUrl()
+	url = vurl
+	t = vurl.split('v/')[1]
+	avid = t.split('?f')[0]
+	req.write( '<tr>')
+	req.write( '<td rowspan="2"')
+	req.write( '<span class="img"><a id="timg%d" href="javascript:changeVideo(\'%s\')"><img src="%s" /></a></span><br />' % ( index, avid, entry.media.thumbnail[random.randint( 0,2)].url))
+	req.write( '<span id="ttime%d" class="time">%s</span>' %( index, datetime.timedelta( seconds=int(entry.media.duration.seconds))))
+	req.write( '</td>')
+	req.write( '<td>')
+	req.write( '<span id="ttitle%d" class="title"><a href="javascript:changeVideo(\'%s\')">%s</a></span><br />' % ( index, avid, entry.media.title.text))
+	req.write( '</td>')                                          
+	req.write( '</tr>')
+	req.write( '<tr>')
+	req.write( '<td>')
+	req.write( '<span id="tview_count%d" class="view_count">View Count: %s</span><br />' % ( index, entry.statistics.view_count))
+	req.write( '</td>')
+	req.write( '</tr>')
+	if index == vout + 1 :
+		vid = t.split('?f')[0]
+
+def PrintVideoFeed( feed) :
+	if not feed.entry :
+		req.write( '<center><b><p><font color="red">Result not found.</font></p></b></center>')
+	else :
+		index = 1
+		video_out = random.randint( 0, 5)
+		req.write( '<table border="0">')
+		for entry in feed.entry :
+			if not entry.noembed :
+				PrintEntryDetails( entry, index, video_out)
+				index = index + 1
+			else :
+				continue
+			if index > 5 :
+				break;
+		req.write( '</table></div>')
+
+def SearchAndPrint( search_terms):
+	yt_service = gdata.youtube.service.YouTubeService()
+	query = gdata.youtube.service.YouTubeVideoQuery()
+	query.vq = search_terms 
+	query.orderby = 'relevance'
+	query.racy = 'include'
+	feed = yt_service.YouTubeQuery(query)
+	PrintVideoFeed( feed)
+
+def GetRelatedFeed( videoid) :
+	yt_service = gdata.youtube.service.YouTubeService()
+	related_feed = yt_service.GetYouTubeRelatedVideoFeed( video_id=videoid)
+	PrintVideoFeed( related_feed)
+
+term = form.getfirst('term')
+if term :
+	term = cgi.escape( term)
+	SearchAndPrint( term)
+
+related = form.getfirst('related')
+if related :
+	related = cgi.escape( related)
+	tmp = related.split('v=')[1]
+	related = tmp.split('&')[0]
+	GetRelatedFeed( related)
+
+%>

@@ -1,0 +1,28 @@
+<html>
+<%
+import cgi
+import gdata.youtube
+import gdata.youtube.service
+%>
+
+<%
+term = form.getfirst('term')
+if not term :
+	#
+%>
+<p><form action="test.psp" method="GET">
+	YourSearch: <input type="text" name="term" />
+	<input type="submit" value="Search!" />
+</form></p>
+<%
+else:
+	term = cgi.escape(term)
+	#
+%>
+<p>Your submitted word was "<%= term %></p>
+<p><a href=?>Submit another? </a><p>
+<%
+	#
+%>
+
+</html>
