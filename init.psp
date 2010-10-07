@@ -11,7 +11,7 @@ def GetOnViews() :
 
 	yt_api = gdata.youtube.service.YouTubeService()
 	onView = yt_api.GetMostViewedVideoFeed()
-	chose = random.randint( 0, 5)
+	chose = random.randint( 0, 10)
 	iter = 0
 	chose_vid = ''
 	for entry in onView.entry :
@@ -38,7 +38,7 @@ def GetMostRecent() :
 				cnt = cnt + 1
 		else :
 			continue
-		if cnt > 5 :
+		if cnt == 10 :
 			break
 	req.write( '</table>')
 

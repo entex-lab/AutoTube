@@ -5,13 +5,9 @@ import datetime
 import gdata.youtube
 import gdata.youtube.service
 
-url = ''
-vid = ''
-
 # function start here
 
 def PrintEntryDetails( entry, index, vout) :
-	global url, vid
 	vurl = entry.GetSwfUrl()
 	url = vurl
 	t = vurl.split('v/')[1]
@@ -30,15 +26,13 @@ def PrintEntryDetails( entry, index, vout) :
 	req.write( '<span id="tview_count%d" class="view_count">View Count: %s</span><br />' % ( index, entry.statistics.view_count))
 	req.write( '</td>')
 	req.write( '</tr>')
-	if index == vout + 1 :
-		vid = t.split('?f')[0]
 
 def PrintVideoFeed( feed) :
 	if not feed.entry :
 		req.write( '<center><b><p><font color="red">Result not found.</font></p></b></center>')
 	else :
-		index = 1
-		video_out = random.randint( 0, 5)
+		index = 0
+		video_out = random.randint( 0, 10)
 		req.write( '<table border="0">')
 		for entry in feed.entry :
 			if not entry.noembed :
@@ -46,7 +40,7 @@ def PrintVideoFeed( feed) :
 				index = index + 1
 			else :
 				continue
-			if index > 5 :
+			if index == 10 :
 				break
 		req.write( '</table>')
 
