@@ -96,11 +96,10 @@ function videoRelated() {
 
 function onPlayerStateChange(newState) {
 	
-    var newTitle;
 
 	if( newState == 0 ) { 
-		if( !changeList)
-			changeRelatedList();
+/*		if( !changeList)
+			changeRelatedList( ytplayer.getVideoUrl());*/
 		videoRelated();
 		changeList = false;
 	}
