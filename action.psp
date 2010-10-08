@@ -7,18 +7,18 @@ import gdata.youtube.service
 
 # function start here
 
-def PrintEntryDetails( entry, index, vout) :
+def PrintEntryDetails( entry, index) :
 	vurl = entry.GetSwfUrl()
 	url = vurl
 	t = vurl.split('v/')[1]
 	avid = t.split('?f')[0]
 	req.write( '<tr>')
 	req.write( '<td rowspan="2"')
-	req.write( '<span class="img"><a id="timg%d" onclick="changeTitle( \'video_title\', \'%s\')" href="javascript:changeVideo(\'%s\')" ><img src="%s" /></a></span><br />' % ( index, entry.media.title.text, avid, entry.media.thumbnail[random.randint( 0,2)].url))
+	req.write( '<span class="img"><a id="aimg%d" onclick="changeTitle( \'video_title\', \'%s\')" href="javascript:changeVideo(\'%s\')" ><img src="%s" /></a></span><br />' % ( index, entry.media.title.text, avid, entry.media.thumbnail[random.randint( 0,2)].url))
 	req.write( '<span id="ttime%d" class="time">%s</span>' %( index, datetime.timedelta( seconds=int(entry.media.duration.seconds))))
 	req.write( '</td>')
 	req.write( '<td>')
-	req.write( '<span class="title"><a id="ttitle%d" href="javascript:changeVideo(\'%s\')" onclick="changeTitle( \'video_title\', \'%s\')" >%s</a></span><br />' % ( index, avid, entry.media.title.text, entry.media.title.text))
+	req.write( '<span class="title"><a id="atitle_%d" href="javascript:changeVideo(\'%s\')" onclick="changeTitle( \'video_title\', \'%s\')" >%s</a></span><br />' % ( index, avid, entry.media.title.text, entry.media.title.text))
 	req.write( '</td>')                                          
 	req.write( '</tr>')
 	req.write( '<tr>')
@@ -32,11 +32,10 @@ def PrintVideoFeed( feed) :
 		req.write( '<center><b><p><font color="red">Result not found.</font></p></b></center>')
 	else :
 		index = 0
-		video_out = random.randint( 0, 10)
 		req.write( '<table border="0">')
 		for entry in feed.entry :
 			if not entry.noembed :
-				PrintEntryDetails( entry, index, video_out)
+				PrintEntryDetails( entry, index)
 				index = index + 1
 			else :
 				continue
@@ -55,7 +54,7 @@ def SearchAndPrint( search_terms):
 
 def GetRelatedFeed( videoid) :
 	yt_service = gdata.youtube.service.YouTubeService()
-	related_feed = yt_service.GetYouTubeRelatedVideoFeed( video_id=videoid)
+	related_feed = yt_service.GetYouTubeRelatedVideoFeed( video_id = videoid)
 	PrintVideoFeed( related_feed)
 
 term = form.getfirst('term')

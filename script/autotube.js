@@ -3,6 +3,7 @@ $(document).ready( initPage);
 /* ajax */
 
 var exist = false;
+var changeList = false;
 
 function initPage() {
 
@@ -30,9 +31,23 @@ function changeTitle( targetId, text) {
 
 }
 
+function updatePlayerInfo() {
+
+
+	if( ytplayer && ytplayer.getDuration() && !changeList) {
+		if( ytplayer.getCurrentTime() >= ytplayer.getDuration() * 0.25) {
+			var currentUrl = ytplayer.getVideoUrl();
+			changeRelatedList( currentUrl);
+			changeList = true;
+		}
+	}
+
+}
+
 function onYouTubePlayerReady(playerId) {
 
 	ytplayer = document.getElementById( 'AutoPlayer');
+	setInterval( updatePlayerInfo, 500);
 	ytplayer.addEventListener("onStateChange", "onPlayerStateChange");
 
 }
@@ -51,26 +66,44 @@ function changeVideo( videoID) {
                "player", "480", "360", "8", null, null, params, atts);
 }
                                                                 
+function changeRelatedList( url) {
+
+	$('#right').load('./action.psp?related='+url, 
+		function() {
+			$('#right').fadeIn();
+		}
+	);
+
+}
+
 function videoRelated() {
 
 	var linkArray = new Array();
-	for( var i = 1; i <= 5; i++) {
-		var tmp = document.getElementById( 'timg'+i);
-		linkArray[i-1] = tmp;
+	var newTitle;
+	var dice, sdice;
+	for( var i = 0; i < 10; i++) {
+		var tmp = document.getElementById( 'aimg'+i);
+		linkArray[i] = tmp;
 	}
 	// ranking rule not yet.
-	var dice = Math.floor( Math.random() * 5);
+	dice = Math.floor( Math.random() * 10);
+	sdice = dice.toString();
+	newTitle = document.getElementById( 'atitle_' + sdice ).innerHTML;
+	changeTitle( 'video_title', newTitle);
+	changeTitle( 'sideList', 'Current Related List');
 	eval( linkArray[dice].toString());
 
 }
 
 function onPlayerStateChange(newState) {
 	
-    var currentUrl = ytplayer.getVideoUrl();
     var newTitle;
-	if( newState == 0 ) {
-		changeRelatedList( currentUrl);
+
+	if( newState == 0 ) { 
+		if( !changeList)
+			changeRelatedList();
 		videoRelated();
+		changeList = false;
 	}
 }
 
@@ -88,15 +121,5 @@ function createList( ) {
 	changeTitle( 'sideList', 'Current Related Video');
 
 	return false;
-}
-
-function changeRelatedList( url) {
-
-	$('#right').load('./action.psp?related='+url, 
-		function() {
-			$('#right').fadeIn();
-		}
-	);
-
 }
 

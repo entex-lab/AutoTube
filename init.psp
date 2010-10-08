@@ -34,7 +34,7 @@ def GetMostRecent() :
 	for entry in most.entry :
 		if not entry.noembed :
 			if random.random() > 0.5 :
-				PrintEntryDetails( entry, cnt, -1) 
+				PrintEntryDetails( entry, cnt) 
 				cnt = cnt + 1
 		else :
 			continue
