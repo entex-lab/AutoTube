@@ -24,13 +24,17 @@
 	<div id="left">
 		<div id="player">
 		</div>
+		<div id="video_info">
+		<div id="tag_cloud">
+		</div>
+		</div>
 	</div>
 
 <p id="sideList">list here</p>
 <div id="right">
 </div>
 
-<span id="bottom"><a href="mailto:nonameds@gmail.com">Contact</a> | Composed By python in mod_python</span>
+<span id="bottom"><a href="mailto:nonameds@gmail.com">Contact with me</a> | Developed By Python</span>
 
 </body>
 </html>
