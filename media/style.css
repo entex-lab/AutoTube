@@ -91,6 +91,7 @@ html {
 }
 
 #bottom { 
+	font-size: 15pt;
 	font-family: serif,sans-serif,cursive,monospace;
 	position: absolute;
 	margin: 85% 35%;

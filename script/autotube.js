@@ -26,8 +26,7 @@ function initPage() {
 function changeTitle( targetId, text) {
 
 	var target = document.getElementById( targetId );
-
-	target.innerHTML = text;
+	target.innerHTML = text.replace( /"/g, '&quot').replace( /\'/g, '&#039;');
 
 }
 
