@@ -1,0 +1,18 @@
+# Author: Terces Tsai
+# From CCU CSIE junior, Taiwan
+# Project start: Oct 4, 2010"
+
+Description :
+	Though YouTube has the play list function, but people who usually want to listen a music randomly or pick up a music
+	on the recommand related video in the left side list.
+	So I try to do it by itself, means computer.
+
+Usage: 
+	At first, search a video/song, and select it to play on the left. It will find a relative list and choose one as the
+	next playing by selfmotion. As long as the YouTube dosen't cause an error on video or your network got something 
+	problems, it will be playing forever :P
+	But, if the relationship diverges, means, it might find a video/song out of your search terms. This is not a bug, 
+	but, I have gotten the solution.
+
+Version 1.0.16 : 
+	Start to write the readme.
