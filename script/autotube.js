@@ -33,7 +33,7 @@ function changeTitle( targetId, text) {
 function updatePlayerInfo() {
 
 
-	if( ytplayer && ytplayer.getDuration() && !changeList) {
+	if( ytplayer && ytplayer.getDuration() > 0 && !changeList) {
 		if( ytplayer.getCurrentTime() >= ytplayer.getDuration() * 0.25) {
 			var currentUrl = ytplayer.getVideoUrl();
 			changeRelatedList( currentUrl);
@@ -80,12 +80,12 @@ function videoRelated() {
 	var linkArray = new Array();
 	var newTitle;
 	var dice, sdice;
-	for( var i = 0; i < 10; i++) {
+	for( var i = 0; i < 7; i++) {
 		var tmp = document.getElementById( 'aimg'+i);
 		linkArray[i] = tmp;
 	}
 	// ranking rule not yet.
-	dice = Math.floor( Math.random() * 10);
+	dice = Math.floor( Math.random() * 7);
 	sdice = dice.toString();
 	newTitle = document.getElementById( 'atitle_' + sdice ).innerHTML;
 	changeTitle( 'video_title', newTitle);
