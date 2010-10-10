@@ -40,7 +40,7 @@ def PrintVideoFeed( feed, current = None) :
 				index = index + 1
 			else :
 				continue
-			if index == 7 :
+			if index == 6 :
 				break
 		req.write( '</table>')
 

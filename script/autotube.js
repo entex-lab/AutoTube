@@ -80,12 +80,12 @@ function videoRelated() {
 	var linkArray = new Array();
 	var newTitle;
 	var dice, sdice;
-	for( var i = 0; i < 7; i++) {
+	for( var i = 0; i < 6; i++) {
 		var tmp = document.getElementById( 'aimg'+i);
 		linkArray[i] = tmp;
 	}
 	// ranking rule not yet.
-	dice = Math.floor( Math.random() * 7);
+	dice = Math.floor( Math.random() * 6);
 	sdice = dice.toString();
 	newTitle = document.getElementById( 'atitle_' + sdice ).innerHTML;
 	changeTitle( 'video_title', newTitle);
