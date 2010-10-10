@@ -34,13 +34,13 @@ def PrintVideoFeed( feed, current = None) :
 		req.write( '<table border="0">')
 		for entry in feed.entry :
 			if not entry.noembed :
-				if not current and current == entry.GetSwfUrl(): 
+				if current in entry.GetSwfUrl(): 
 					continue
 				PrintEntryDetails( entry, index)
 				index = index + 1
 			else :
 				continue
-			if index == 7 :
+			if index == 6 :
 				break
 		req.write( '</table>')
 
@@ -53,10 +53,10 @@ def SearchAndPrint( search_terms):
 	feed = yt_service.YouTubeQuery(query)
 	PrintVideoFeed( feed)
 
-def GetRelatedFeed( videoid, url) :
+def GetRelatedFeed( videoid) :
 	yt_service = gdata.youtube.service.YouTubeService()
 	related_feed = yt_service.GetYouTubeRelatedVideoFeed( video_id = videoid)
-	PrintVideoFeed( related_feed, url)
+	PrintVideoFeed( related_feed, videoid)
 
 term = form.getfirst('term')
 if term :
@@ -64,9 +64,8 @@ if term :
 
 related = form.getfirst('related')
 if related :
-	url = related
 	tmp = related.split('v=')[1]
 	related = tmp.split('&')[0]
-	GetRelatedFeed( related, url)
+	GetRelatedFeed( related)
 
 %>

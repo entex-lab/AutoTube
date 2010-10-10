@@ -19,3 +19,7 @@ Version 1.0.16 :
 
 Version 1.0.17 :
 	Replace the relative video 10 to 7.
+
+Version 1.0.16 :
+	Change the relative feed video from 7 to 6.
+	Improving the same video check solution.
