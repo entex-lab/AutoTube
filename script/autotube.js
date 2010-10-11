@@ -4,6 +4,7 @@ $(document).ready( initPage);
 
 var exist = false;
 var changeList = false;
+var videoNumber = 1;
 
 function initPage() {
 
@@ -63,6 +64,8 @@ function changeVideo( videoID) {
 	var atts = { id: "AutoPlayer"};
 	swfobject.embedSWF("http://www.youtube.com/v/" + videoID + "&enablejsapi=1&autoplay=1&rel=0&fs=1&playerapiid=AutoPlayer", 
                "player", "480", "360", "8", null, null, params, atts);
+
+    changeList = false;
 }
                                                                 
 function changeRelatedList( url) {
@@ -87,8 +90,9 @@ function videoRelated() {
 	// ranking rule not yet.
 	dice = Math.floor( Math.random() * 6);
 	sdice = dice.toString();
-	newTitle = document.getElementById( 'atitle_' + sdice ).innerHTML;
+	newTitle = videoNumber.toString() + '. ' + document.getElementById( 'atitle_' + sdice ).innerHTML;
 	changeTitle( 'video_title', newTitle);
+	videoNumber = videoNumber + 1;
 	changeTitle( 'sideList', 'Current Related List');
 	eval( linkArray[dice].toString());
 
@@ -117,6 +121,7 @@ function createList( ) {
 	);
 
 	changeTitle( 'sideList', 'Current Related Video');
+	videoNumber = 1;
 
 	return false;
 }
