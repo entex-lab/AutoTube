@@ -35,6 +35,11 @@
 <p id="sideList">list here</p>
 <div id="right">
 </div>
+<div id="played_list">
+<select id="real_list">
+	<option>What you had viewed</option>
+</select>
+</div>
 
 <span id="bottom"><a href="mailto:nonameds@gmail.com">Contact with me</a> | <a href="http://tercestsai.wordpress.com/" target="_blank">Blog</a> | 
 <!--  Your Page ID: 100990 --><img style="border: 0px" src="http://www.bestfreehitcounters.com/count.php?page=100990" /><font style="font-family: Geneva, Arial, Helvetica, sans-serif; font-size: 10px; text-decoration: none; color: #314321"> </font> | Developed By Python</span>

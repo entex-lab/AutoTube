@@ -95,6 +95,10 @@ function videoRelated() {
 	videoNumber = videoNumber + 1;
 	changeTitle( 'sideList', 'Current Related List');
 	eval( linkArray[dice].toString());
+	var d = document.createElement("option");
+	d.innerHTML = newTitle;
+	d.setAttribute( "onchange", linkArray[dice].toString());
+	document.getElementById("real_list").appendChild(d);
 
 }
 
