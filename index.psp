@@ -36,7 +36,7 @@
 <div id="right">
 </div>
 <div id="played_list">
-<select id="real_list">
+<select id="real_list" onchange="changeVideo( document.getElementById( 'real_list').value)" >
 	<option>What you had viewed</option>
 </select>
 </div>

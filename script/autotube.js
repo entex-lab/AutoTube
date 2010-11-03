@@ -67,7 +67,13 @@ function changeVideo( videoID) {
 
     changeList = false;
 }
-                                                                
+              /*                                                  
+jQuery("#ytplayer-container").tubeplayer( {
+	width: 480,
+	height: 360,
+	allowfullscreen: "true",
+	playerID:  
+*/
 function changeRelatedList( url) {
 
 	$('#right').load('./action.psp?related='+url, 
@@ -83,6 +89,7 @@ function videoRelated() {
 	var linkArray = new Array();
 	var newTitle;
 	var dice, sdice;
+	// bug need to fix
 	for( var i = 0; i < 6; i++) {
 		var tmp = document.getElementById( 'aimg'+i);
 		linkArray[i] = tmp;
@@ -97,7 +104,7 @@ function videoRelated() {
 	eval( linkArray[dice].toString());
 	var d = document.createElement("option");
 	d.innerHTML = newTitle;
-	d.setAttribute( "onchange", linkArray[dice].toString());
+	d.setAttribute( "value", linkArray[dice].toString().slice( 25, 36) );
 	document.getElementById("real_list").appendChild(d);
 
 }
