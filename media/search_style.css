@@ -1,0 +1,32 @@
+html {
+	width: 100%;
+
+}
+
+#bottom {
+	margin-top: 20px;
+
+
+}
+
+.medium {
+	overflow: auto;
+	height: 450px;
+	float: left;
+	margin: 20px;
+	width: 200px;
+	border-style: double;
+	border-width: 2px;
+}
+
+#first {
+
+}
+
+#second {
+
+}
+
+#third {
+
+}

@@ -16,7 +16,7 @@
 <body>
 	<div id="footer">
 		<img src="./media/logo-350x90_beta.png" width="40%"/>
-   	<form id="searchform" action="./action.psp" method="GET" onsubmit="return createList();">
+   	<form id="searchform" action="javascript: void();" method="GET" onsubmit="return createList();">
 			<input id="term" type="text" name="term" />
 			<input type="submit" value="Search!" />
 		</form>

@@ -4,7 +4,7 @@ $(document).ready( initPage);
 
 var exist = false;
 var changeList = false;
-var videoNumber = 1;
+var videoNumber = 0;
 
 function initPage() {
 
@@ -65,7 +65,7 @@ function changeVideo( videoID) {
 	swfobject.embedSWF("http://www.youtube.com/v/" + videoID + "&enablejsapi=1&autoplay=1&rel=0&fs=1&playerapiid=AutoPlayer", 
                "player", "480", "360", "8", null, null, params, atts);
 
-    changeList = false;
+    changeList = false;                    
 }
               /*                                                  
 jQuery("#ytplayer-container").tubeplayer( {
@@ -97,9 +97,9 @@ function videoRelated() {
 	// ranking rule not yet.
 	dice = Math.floor( Math.random() * 6);
 	sdice = dice.toString();
+	videoNumber = videoNumber + 1;
 	newTitle = videoNumber.toString() + '. ' + document.getElementById( 'atitle_' + sdice ).innerHTML;
 	changeTitle( 'video_title', newTitle);
-	videoNumber = videoNumber + 1;
 	changeTitle( 'sideList', 'Current Related List');
 	eval( linkArray[dice].toString());
 	var d = document.createElement("option");
@@ -132,7 +132,11 @@ function createList( ) {
 	);
 
 	changeTitle( 'sideList', 'Current Related Video');
-	videoNumber = 1;
+	videoNumber = 0;
+	var d = document.createElement("option");
+	d.innerHTML = "-- New Search Mission --";
+	document.getElementById("real_list").appendChild(d);
+
 
 	return false;
 }

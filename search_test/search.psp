@@ -1,0 +1,35 @@
+<%
+
+import cgi
+import gdata.youtube
+import gdata.youtube.service
+
+def PrintEntryDetails( entry) :
+	req.write( '<li><img src="%s" width="80" height="45"></img><a href="%s">%s</a></li>' %( entry.media.thumbnail[0].url, entry.GetSwfUrl(), entry.media.title.text))
+
+def PrintVideoFeed( feed, current = None) :
+	if not feed.entry :
+		req.write( '<center><b><p><font color="red">Result not found.</font></p></b></center>')
+	else :
+		req.write( '<ol>')
+		for entry in feed.entry :
+			if not entry.noembed :
+				PrintEntryDetails( entry)
+			else :
+				continue
+		req.write( '</ol>')
+
+def yt_search( search_terms) :
+	yt_service = gdata.youtube.service.YouTubeService()
+	query = gdata.youtube.service.YouTubeVideoQuery()
+	query.vq = search_terms 
+	query.orderby = 'relevance'
+	query.racy = 'include'
+	query.max_results = 50
+	feed = yt_service.YouTubeQuery(query)
+	PrintVideoFeed( feed) 
+
+term = form.getfirst('term')
+yt_search( term)
+
+%>

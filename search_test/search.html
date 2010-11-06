@@ -1,0 +1,41 @@
+<!--DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<title>YouTube Search improve project</title>
+	<meta http-equiv="content-type" 
+		content="text/html;charset=utf-8" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<script language="javascript" type="text/javascript" src="./script/jquery-1.3.2.js"></script>
+	<script language="javascript" type="text/javascript" src="./script/search.js"></script>
+	<link rel=stylesheet type="text/css" href="./media/search_style.css">
+</head>
+
+<body>
+<div id="bottom">
+<form action="javascript: void()" method="GET" onsubmit="search(); if( index > 1) overlap();">
+	<input type="text" id="term" name="term"/>
+	<input type="submit" value="go"/>
+</form>
+</div>
+
+<div id="first" class="medium">
+i am first
+</div>
+<div id="second" class="medium">
+i am second
+</div>
+<div id="third" class="medium">
+i am third
+</div>
+<div id="overlap2" class="medium">
+i am overlap in 1/2 2/3 1/3
+</div>
+<div id="overlap3" class="medium">
+i am overlap in 1/2/3
+</div>
+
+</body>
+</html>
+
