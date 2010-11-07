@@ -17,7 +17,8 @@ function overlap() {
 	var lis2 = ol2[0].getElementsByTagName('li');
 	for( var i = 0; i < lis2.length; ++i) {
 		var temp_b = lis2[i].getElementsByTagName('a');
-		container[ temp_b[0].href.slice( 25, 36)] += 1;
+		var tmp = container[ temp_b[0].href.slice( 25, 36)];
+		container[ temp_b[0].href.slice( 25, 36)] = tmp ? (tmp + 1) : 1;
 	}
 	// third;
 	var d3 = document.getElementById('third');
@@ -26,12 +27,19 @@ function overlap() {
 		var lis3 = ol3[0].getElementsByTagName('li');
 		for( var i = 0; i < lis3.length; ++i) {
 			var temp_c = lis3[i].getElementsByTagName('a');
-			container[ temp_c[0].href.slice( 25, 36)] += 1;
+			var tmp = container[ temp_c[0].href.slice( 25, 36)];
+			container[ temp_c[0].href.slice( 25, 36)] = tmp ? ( tmp + 1) : 1;
 		}
 	}
 	// overlap 
+	if( document.getElementById( 'ov2'))
+		document.getElementById( 'overlap2').removeChild( document.getElementById('ov2'));
+	if( document.getElementById( 'ov3'))
+		document.getElementById( 'overlap3').removeChild( document.getElementById('ov3'));
 	var ov2 = document.createElement( 'ol');
 	var ov3 = document.createElement( 'ol');
+	ov2.setAttribute( "id", "ov2");
+	ov3.setAttribute( "id", "ov3");
 	for( var x in container) {
 		if( container[x] == 2 ) {
 			var tmp = document.createElement( 'li');
@@ -59,6 +67,8 @@ function search() {
 			$('#first').load('./search.psp?term='+searchTerm,
 				function(){
 					$('#first').fadeIn();
+					if( index > 1)
+						overlap();
 				}
 			);
 			break;
@@ -67,6 +77,7 @@ function search() {
 			$('#second').load('./search.psp?term='+searchTerm,
 				function(){
 					$('#second').fadeIn();
+					overlap();
 				}
 			);
 			break;
@@ -75,6 +86,7 @@ function search() {
 			$('#third').load('./search.psp?term='+searchTerm,
 				function(){
 					$('#third').fadeIn();
+					overlap();
 				}
 			);
 			break;
@@ -85,5 +97,6 @@ function search() {
 		}
 	}
 	index += 1;
+	return ;
 }
 
