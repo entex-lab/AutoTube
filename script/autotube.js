@@ -14,10 +14,30 @@ function initPage() {
 	}
 	);
 */
-	$('#right').load( './init.psp?which=right', function() {
-		$('#right').fadeIn();
+
+	var url = window.location.toString();
+	var arg = new Array();
+
+	if( url.indexOf("?") != -1) {
+		var ary = url.split("?")[1].split("&");
+		for( var i in ary) {
+			arg[ ary[i].split("=")[0].toString()] = decodeURI( ary[i].split("=")[1].toString());
+		}
 	}
-	);
+
+	if( arg['q']) {
+		$('#right').load( './action.psp?term='+encodeURIComponent( arg['q']), function() {
+			$('#right').fadeIn();
+			document.getElementById('term').value = arg['q'];
+		}
+		);
+	}
+	else {
+		$('#right').load( './init.psp?which=right', function() {
+			$('#right').fadeIn();
+		}
+		);
+	}
 
 	changeTitle( 'video_title', 'Random Most Viewed Video');
 	changeTitle( 'sideList', 'Random List');

@@ -48,3 +48,6 @@ Version 1.0.26 :
 
 Version 1.0.27 :
 	New search function improving.
+
+Version 1.0.28 :
+	Add initial query in URL
